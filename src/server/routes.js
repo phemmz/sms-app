@@ -1,5 +1,10 @@
 import express from 'express';
 
-const routes = express();
+import { createContact } from './controllers/contacts';
+import { validateNewContact } from './helpers/contactValidations';
 
-export default routes;
+const router = express.Router();
+
+router.post('/contact', validateNewContact, createContact);
+
+export default router;
