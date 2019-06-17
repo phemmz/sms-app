@@ -19,8 +19,8 @@ module.exports = {
         },
       },
       status: {
-        type: Sequelize.ENUM('compose', 'sent'),
-        defaultValue: 'compose',
+        type: Sequelize.ENUM('sent', 'read'),
+        defaultValue: 'sent',
         allowNull: false,
       },
       senderId: {

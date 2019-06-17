@@ -12,7 +12,7 @@ export default (sequelize, DataTypes) => {
     },
     status: {
       type: DataTypes.ENUM,
-      values: ['compose', 'sent'],
+      values: ['sent', 'read'],
       defaultValue: 'compose',
       allowNull: false,
     },
