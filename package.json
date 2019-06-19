@@ -25,5 +25,8 @@
     "db:migrate": "sequelize db:migrate",
     "build-server": "babel -d ./dist ./src/server -s",
     "postinstall": "yarn db:migrate && yarn build-server"
+  },
+  "engines": {
+    "node": "8.12.0"
   }
 }
