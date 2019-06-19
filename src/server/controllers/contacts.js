@@ -1,4 +1,4 @@
-import { Contact } from '../models';
+import { Contact, Message } from '../models';
 
 const createContact = async (request, response) => {
   try {
@@ -89,8 +89,52 @@ const getContactByPhoneNumber = async (request, response) => {
   }
 }
 
+const getContactMessages = async (request, response) => {
+  try {
+    const { messageStatus, phoneNumber } = request.params;
+    const include = [];
+
+    if (messageStatus === 'sent') {
+      include.push({
+        model: Message,
+        association: 'sentMessages',
+        attributes: {
+          exclude: ['senderId'],
+        },
+      })
+    } else {
+      include.push({
+        model: Message,
+        association: 'receivedMessages',
+        attributes: {
+          exclude: ['receiverId'],
+        },
+      })
+    }
+
+    const messages = await Contact.findAll({
+      include,
+      attributes: {
+        exclude: ['createdAt', 'updatedAt'],
+      },
+      where: { phoneNumber },
+    });
+
+    response.status(200).json({
+      success: true,
+      messages
+    });
+  } catch(error) {
+    response.status(500).json({
+      success: false,
+      error
+    })
+  }
+}
+
 export {
   createContact,
   getAllContacts,
-  getContactByPhoneNumber
+  getContactByPhoneNumber,
+  getContactMessages
 };

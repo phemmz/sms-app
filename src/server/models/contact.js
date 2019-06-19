@@ -12,6 +12,7 @@ export default (sequelize, DataTypes) => {
     },
     phoneNumber: {
       type: DataTypes.STRING,
+      primaryKey: true,
       allowNull: false,
       unique: {
         args: true,
@@ -26,14 +27,16 @@ export default (sequelize, DataTypes) => {
     },
   }, {});
 
+  Contact.removeAttribute('id');
+
   Contact.associate = models => {
     Contact.hasMany(models.Message, {
-      foreignKey: 'receiverId',
-      as: 'receiver',
+      foreignKey: 'senderId',
+      as: 'sentMessages',
     });
     Contact.hasMany(models.Message, {
-      foreignKey: 'senderId',
-      as: 'sender',
+      foreignKey: 'receiverId',
+      as: 'receivedMessages',
     });
   };
 

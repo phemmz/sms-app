@@ -24,10 +24,24 @@ module.exports = {
         allowNull: false,
       },
       senderId: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        references: {
+          model: 'Contacts',
+          key: 'phoneNumber',
+          as: 'senderId',
+        },
       },
       receiverId: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+        references: {
+          model: 'Contacts',
+          key: 'phoneNumber',
+          as: 'receiverId',
+        },
       },
       createdAt: {
         allowNull: false,

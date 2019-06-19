@@ -2,12 +2,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Contacts', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
       name: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -20,6 +14,7 @@ module.exports = {
       },
       phoneNumber: {
         type: Sequelize.STRING,
+        primaryKey: true,
         allowNull: false,
         unique: {
           args: true,
