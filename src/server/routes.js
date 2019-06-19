@@ -3,7 +3,8 @@ import express from 'express';
 import {
   createContact,
   getAllContacts,
-  getContactByPhoneNumber
+  getContactByPhoneNumber,
+  getContactMessages
 } from './controllers/contacts';
 import { sendMessage } from './controllers/messages';
 import { validateNewContact } from './helpers/contactValidations';
@@ -15,5 +16,6 @@ router.get('/contacts', getAllContacts);
 router.get('/contacts/:phoneNumber', getContactByPhoneNumber);
 router.post('/contact', validateNewContact, createContact);
 router.post('/message', validateMessage, sendMessage);
+router.get('/messages/:messageStatus/:phoneNumber', getContactMessages);
 
 export default router;

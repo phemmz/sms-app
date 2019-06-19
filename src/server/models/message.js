@@ -18,20 +18,34 @@ export default (sequelize, DataTypes) => {
     },
     senderId: {
       type: DataTypes.STRING,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      references: {
+        model: 'Contacts',
+        key: 'phoneNumber',
+        as: 'senderId',
+      },
     },
     receiverId: {
       type: DataTypes.STRING,
+      onDelete: 'SET NULL',
+      onUpdate: 'CASCADE',
+      references: {
+        model: 'Contacts',
+        key: 'phoneNumber',
+        as: 'receiverId',
+      },
     },
   }, {});
 
   Message.associate = models => {
     Message.belongsTo(models.Contact, {
       foreignKey: 'senderId',
-      onDelete: 'CASCADE',
+      as: 'sentMessages',
     });
     Message.belongsTo(models.Contact, {
       foreignKey: 'receiverId',
-      onDelete: 'CASCADE',
+      as: 'receivedMessages',
     });
   };
 
