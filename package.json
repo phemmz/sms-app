@@ -22,6 +22,8 @@
   },
   "scripts": {
     "start": "nodemon --watch src/server --exec babel-node -- src/server/app.js",
-    "db:migrate": "sequelize db:migrate"
+    "db:migrate": "sequelize db:migrate",
+    "build-server": "babel -d ./dist ./src/server -s",
+    "postinstall": "yarn db:migrate && yarn build-server"
   }
 }
