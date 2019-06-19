@@ -94,6 +94,13 @@ const getContactMessages = async (request, response) => {
     const { messageStatus, phoneNumber } = request.params;
     const include = [];
 
+    if (phoneNumber.length !== 11) {
+      return response.status(422).json({
+        success: false,
+        message: 'Phone number must be 11 digits'
+      });
+    }
+
     if (messageStatus === 'sent') {
       include.push({
         model: Message,
@@ -128,6 +135,31 @@ const getContactMessages = async (request, response) => {
     response.status(500).json({
       success: false,
       error
+    });
+  }
+}
+
+const deleteContact = async (request, response) => {
+  try {
+    const { phoneNumber } = request.params;
+
+    if (phoneNumber.length !== 11) {
+      return response.status(422).json({
+        success: false,
+        message: 'Phone number must be 11 digits'
+      });
+    }
+
+    await Contact.destroy({ where: { phoneNumber }});
+
+    response.status(200).json({
+      success: true,
+      message: 'Contact successfully deleted!'
+    });
+  } catch(error) {
+    response.status(500).json({
+      success: false,
+      error
     })
   }
 }
@@ -136,5 +168,6 @@ export {
   createContact,
   getAllContacts,
   getContactByPhoneNumber,
-  getContactMessages
+  getContactMessages,
+  deleteContact
 };
